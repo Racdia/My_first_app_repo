@@ -3,6 +3,7 @@ numpy
 bs4
 selenium
 webdriver-manager
+plotly
 requests
 scipy
 matplotlib
