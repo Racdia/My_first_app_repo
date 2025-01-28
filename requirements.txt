@@ -1,6 +1,7 @@
 
 numpy
 bs4
+selenium
 requests
 scipy
 matplotlib
