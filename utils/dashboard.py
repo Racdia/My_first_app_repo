@@ -3,8 +3,7 @@ import seaborn as sns
 import streamlit as st
 import pandas as pd
 import plotly.express as px
-import plotly.graph_objects as go
-import os
+
 
 def display_dashboard(df, category):
     st.subheader(f"📊 Analyse des données pour {category}")
@@ -55,11 +54,3 @@ def display_dashboard(df, category):
             fig = px.line(df_date, x="date", y="prix", title="Tendance des prix au fil du temps", markers=True)
             st.plotly_chart(fig, use_container_width=True)
 
-    # 🌍 Carte des localisations (si coordonnées GPS disponibles)
-    if "latitude" in df.columns and "longitude" in df.columns:
-        st.markdown("### 🌍 Carte des Annonces")
-        fig = px.scatter_mapbox(df, lat="latitude", lon="longitude", hover_name="localisation",
-                                color="prix", size="prix",
-                                color_continuous_scale="reds", zoom=5, height=500)
-        fig.update_layout(mapbox_style="open-street-map")
-        st.plotly_chart(fig, use_container_width=True)
