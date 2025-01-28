@@ -2,6 +2,7 @@
 numpy
 bs4
 selenium
+webdriver-manager
 requests
 scipy
 matplotlib
