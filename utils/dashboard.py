@@ -29,7 +29,7 @@ def display_dashboard(df, category):
 
     # 📊 Histogramme de la distribution des prix
     st.markdown("### 💲 Distribution des Prix")
-    fig = plt.histogram(df, x="prix", nbins=30, title="Distribution des prix", color_discrete_sequence=["blue"])
+    fig = plt.hist(df, x="prix", nbins=30, title="Distribution des prix", color_discrete_sequence=["blue"])
     st.plotly_chart(fig, use_container_width=True)
 
     # 🔝 Localisations les plus fréquentes
