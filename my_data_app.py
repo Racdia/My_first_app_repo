@@ -5,9 +5,10 @@ import pandas as pd
 import os
 import  matplotlib as plt
 import seaborn as sns
-from utils.scraping import scrap_data
+
 from utils.cleaning import clean_data
 from utils.dashboard import display_dashboard
+from utils.scraping import scrap_data
 
 # Configuration de l'application
 st.set_page_config(page_title="My Scraping App", page_icon="🚀", layout="wide")
