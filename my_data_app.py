@@ -170,27 +170,10 @@ elif option == "Évaluer l'App":
     st.header("Évaluer l'application")
     st.write("Merci de remplir ce formulaire pour nous aider à améliorer l'application.")
 
-    # Formulaire d'évaluation
-    with st.form("evaluation_form"):
-        name = st.text_input("Votre nom :")
-        rating = st.slider("Notez l'application (1 à 5) :", 1, 5, 3)
-        feedback = st.text_area("Vos commentaires :")
-        submitted = st.form_submit_button("Soumettre")
+    # Lien du formulaire KoboToolbox
+    kobo_form_url = "https://ee.kobotoolbox.org/x/bCaC927U"  # Remplace par ton propre lien
 
-        if submitted:
-            st.success("Merci pour votre évaluation !")
-            st.write(f"Nom : {name}")
-            st.write(f"Note : {rating}")
-            st.write(f"Commentaires : {feedback}")
-
-            # Sauvegarder l'évaluation dans un fichier
-            if not os.path.exists("data/evaluations"):
-                os.makedirs("data/evaluations")
-            evaluation_data = {
-                "Nom": name,
-                "Note": rating,
-                "Commentaires": feedback
-            }
-            df_evaluation = pd.DataFrame([evaluation_data])
-            df_evaluation.to_csv("data/evaluations/evaluations.csv", mode="a", header=not os.path.exists("data/evaluations/evaluations.csv"), index=False)
+    # Utiliser iframe pour afficher le formulaire KoboToolbox
+    iframe_code = f'<iframe src="{kobo_form_url}" width="100%" height="600px"></iframe>'
+    st.markdown(iframe_code, unsafe_allow_html=True)
 

@@ -4,7 +4,6 @@ import streamlit as st
 import pandas as pd
 import plotly.express as px
 
-
 def display_dashboard(df, category):
     st.subheader(f"📊 Analyse des données pour {category}")
     df.columns = df.columns.str.lower()
