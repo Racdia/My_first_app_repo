@@ -3,10 +3,13 @@ import seaborn as sns
 import streamlit as st
 import pandas as pd
 import plotly.express as px
+import plotly.graph_objects as go
+
 
 def display_dashboard(df, category):
     st.subheader(f"📊 Analyse des données pour {category}")
     df.columns = df.columns.str.lower()
+
     # 🔹 Normalisation des noms de colonnes
     df["prix"] = df["prix"].replace({'FCFA': '', ',': ''}, regex=True)
 
@@ -53,3 +56,25 @@ def display_dashboard(df, category):
             fig = px.line(df_date, x="date", y="prix", title="Tendance des prix au fil du temps", markers=True)
             st.plotly_chart(fig, use_container_width=True)
 
+
+
+    # 📊 Moyenne des prix par localisation - Bar Chart
+    st.markdown("### 💵 Moyenne des prix par Localisation")
+    if "localisation" in df.columns and "prix" in df.columns:
+        location_price_avg = df.groupby("localisation")["prix"].mean().reset_index()
+        location_price_avg = location_price_avg.sort_values(by="prix", ascending=False).head(10)
+
+        fig = px.bar(location_price_avg, x="localisation", y="prix",
+                     title="Moyenne des prix par Localisation",
+                     color="prix", color_continuous_scale="blues")
+        st.plotly_chart(fig, use_container_width=True)
+
+    # 📈 Top 5 des annonces avec les prix les plus élevés - Bar Chart
+    st.markdown("### 🔝 Top 5 des annonces les plus chères")
+    if "localisation" in df.columns and "prix" in df.columns:
+        top_expensive = df.nlargest(5, "prix")[["localisation", "prix"]]
+
+        fig = px.bar(top_expensive, x="localisation", y="prix",
+                     title="Top 5 des annonces les plus chères",
+                     color="prix", color_continuous_scale="reds")
+        st.plotly_chart(fig, use_container_width=True)
