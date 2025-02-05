@@ -54,10 +54,10 @@ background_image_path = "assets/data.PNG"  # Changez le chemin selon votre proje
 st.title("🚀 My Scraping App")
 
 URLS = {
-    "Véhicules": "https://dakarvente.com/index.php?page=annonces_rubrique&url_categorie_2=vehicules&id=2&sort=&nb={}",
-    "Motos": "https://dakarvente.com/index.php?page=annonces_categorie&id=3&sort=&nb={}",
-    "Voitures en location": "https://dakarvente.com/index.php?page=annonces_categorie&id=8&sort=&nb={}",
-    "Téléphones": "https://dakarvente.com/index.php?page=annonces_categorie&id=32&sort=&nb={}"
+    "véhicules": "https://dakarvente.com/index.php?page=annonces_rubrique&url_categorie_2=vehicules&id=2&sort=&nb={}",
+    "motos": "https://dakarvente.com/index.php?page=annonces_categorie&id=3&sort=&nb={}",
+    "voitures en location": "https://dakarvente.com/index.php?page=annonces_categorie&id=8&sort=&nb={}",
+    "téléphones": "https://dakarvente.com/index.php?page=annonces_categorie&id=32&sort=&nb={}"
 }
 
 option = st.sidebar.radio(
@@ -77,7 +77,7 @@ if option == "Scraping":
     def load_existing_data():
         if selected_category == "Toutes les catégories":
             for category in URLS.keys():
-                file_path = f"data/{category.lower().replace(' ', '_')}.csv"
+                file_path = f"data/selenium_data/{category.lower().replace(' ', '_')}.csv"
                 try:
                     df = pd.read_csv(file_path)
                     if clean_data_option:
@@ -114,7 +114,7 @@ if option == "Scraping":
                     st.dataframe(df)
                     st.write("---")
                 for category, df in all_data.items():
-                    file_path = f"data/{category.lower().replace(' ', '_')}.csv"
+                    file_path = f"data/selenium_data/{category.lower().replace(' ', '_')}.csv"
                     df.to_csv(file_path, index=False)
                     st.success(f"Données sauvegardées pour {category} dans : `{file_path}`")
             else:
