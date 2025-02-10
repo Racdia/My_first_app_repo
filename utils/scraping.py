@@ -5,7 +5,6 @@ from bs4 import BeautifulSoup
 import urllib3
 import os
 
-# Désactiver les warnings SSL
 urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
 
 URLS = {
@@ -33,28 +32,23 @@ def scrap_data(base_url, category, max_pages=1):
 
         soup = BeautifulSoup(response.text, "html.parser")
 
-        # Sélection des containers des annonces
         containers = soup.select("div.col.s6.m4.l3")
         print(f"🔎 Trouvé {len(containers)} annonces sur la page {page_num}")
 
         for container in containers:
             try:
-                # Récupération des détails de l'annonce
                 details_elem = container.select_one(".ad__card-description")
                 details = details_elem.get_text(strip=True) if details_elem else "N/A"
 
-                # Extraction des prix et de la localisation
                 price_elem = container.select_one(".ad__card-price")
                 location_elem = container.select_one(".ad__card-location")
 
                 price_text = price_elem.get_text(strip=True).replace("FCFA", "").replace(",", "").strip() if price_elem else "N/A"
                 location_text = location_elem.get_text(strip=True) if location_elem else "N/A"
 
-                # Extraction de l'URL de l'image
                 image_element = container.select_one("img")
                 image_url = image_element["src"].strip() if image_element and image_element.has_attr("src") else "N/A"
 
-                # Stocker les données
                 all_data.append({
                     "Détails": details,
                     "Prix": price_text,
@@ -64,10 +58,8 @@ def scrap_data(base_url, category, max_pages=1):
             except Exception as e:
                 print(f"⚠️ Erreur lors de l'extraction d'une annonce : {e}")
 
-        # Délai pour éviter d’être bloqué par le site
         time.sleep(3)
 
-    # Gestion des fichiers de sauvegarde
     file_path = f"data/selenium_data/{category.lower().replace(' ', '_')}.csv"
     if os.path.exists(file_path):
         try:
@@ -83,7 +75,6 @@ def scrap_data(base_url, category, max_pages=1):
     else:
         old_df = pd.DataFrame()
 
-    # Fusion des nouvelles et anciennes données
     if all_data:
         new_df = pd.DataFrame(all_data)
         combined_df = pd.concat([old_df, new_df], ignore_index=True).drop_duplicates()
@@ -92,6 +83,5 @@ def scrap_data(base_url, category, max_pages=1):
     else:
         print(f"⚠️ Aucun nouveau résultat. Conservation des anciennes données.")
 
-# Exécution du scraping pour toutes les catégories
 for category, url in URLS.items():
     scrap_data(url, category)
