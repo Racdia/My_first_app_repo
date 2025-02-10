@@ -64,7 +64,7 @@ if option == "Scraping":
     load_existing_data()
 
     if st.button("Lancer le scraping"):
-        with st.spinner("Scraping en cours..."):
+        with st.spinner("Scraping en cours.."):
             if selected_category == "Toutes les catégories":
                 for category, url in URLS.items():
                     scrap_data(url, category, max_pages=num_pages)
